@@ -1,0 +1,4 @@
+class Entity {
+  name = "";
+  interactList = [];
+}

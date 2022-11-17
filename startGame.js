@@ -1,0 +1,24 @@
+var player = new Creature() || {};
+player.name = "player";
+player.ab = 7;
+player.ac = 17;
+player.initbonus = 4;
+player.hp = 20;
+player.party = "players";
+player.action["meleeAttack"] = new BasicAttack();
+player.action["meleeAttack"].owner = player;
+player.action["meleeAttack"].damage = 6;
+
+var wolf = new Creature() || {};
+wolf.name = "wolf";
+wolf.ab = 7;
+wolf.ac = 16;
+wolf.hp = 15;
+wolf.party = "wolf";
+wolf.action["attack"] = new BasicAttack();
+wolf.action["attack"].owner = wolf;
+wolf.action["attack"].target = player;
+wolf.logic = new DeadlyAttack();
+wolf.logic.owner = wolf;
+wolf.logic.target = player;
+var creatures = [player, wolf];

@@ -1,0 +1,4 @@
+class Interact {
+  name = "";
+  use() {}
+}

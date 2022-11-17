@@ -1,0 +1,95 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+<div id="app">{{  }}
+<br/>
+   {{getScene}}
+    <div v-for="creature in battle.battleJoiner">
+        {{creature.name}}:init{{creature.init}}:hp{{creature.hp}}
+        
+    </div>
+
+
+    <div>
+        <div v-for="entity in getScene.entityList">
+            {{entity.name}}
+            <button v-for="choice in entity.interactList" @click="interact(choice)">{{choice.name}}</button>
+        </div>
+
+    </div>
+    <div >
+        <button @click="meleeAttack">meleeAttack</button>
+
+    </div>
+
+</div>
+
+<script src="../creature/creature.js"></script>
+<script src="../scene/sceneContoller.js"></script>
+<script src="../config/config.js"></script>
+<script src="../scene//scene.js"></script>
+<script src="../entity/entity.js"></script>
+<script src="../creature//logic/deadlyAttack.js"></script>
+<script src="../battle/battle.js"></script>
+<script src="../creature/logic.js"></script>
+<script src="../action/BasicAttack.js"></script>
+<script src="../action//Interact.js"></script>
+<script src="../tool/d20.js"></script>
+<script src="../startGame.js"></script>
+<script src="../av/test/scene1.js"></script>
+<script src="../av/test/scene2.js"></script>
+<script>
+   // console.log(creatures);
+  const { createApp } = Vue
+  const {ref,computed} =Vue
+  var battle=new Battle();
+  //battle.startBattle(creatures);
+  //wolf.logic.battle=battle;
+    var sceneController=new SceneController();
+    sceneController.scene=Scene1.getInstance();
+    sceneController.scene.init();
+   // console.log(sceneController);
+  var app=createApp({
+    setup(){
+      const sceneContoller = ref(sceneController)
+      
+      //console.log(sceneContoller)
+      const getScene=computed(()=>sceneContoller.value.scene)
+     // sceneContoller.value.scene={}
+      return{ getScene,sceneContoller}
+    },
+    data() {
+      return {
+        message: 'battle',
+        battle: battle,
+        creatures:creatures
+      }
+    },
+     watch: {
+    sceneController: {
+      handler(newValue, oldValue) {
+        // 注意：在嵌套的变更中，
+        // 只要没有替换对象本身，
+        // 那么这里的 `newValue` 和 `oldValue` 相同
+      }}},
+      computed:{
+       
+
+      },
+    methods: {
+        meleeAttack(){
+            player.action["meleeAttack"].target=wolf;
+            player.action["meleeAttack"].use();
+            battle.battleNext();
+        },
+        interact(choice){
+            choice.use();
+        }
+    },
+  }).mount('#app')
+  console.log(app.sceneContoller.scene)
+  sceneController=app.sceneContoller
+  //sceneController2.scene={}
+ // sceneController2.scene={}
+  battle.battleNext();
+</script>
