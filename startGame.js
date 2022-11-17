@@ -8,3 +8,7 @@ player.party = "players";
 player.action["meleeAttack"] = new BasicAttack();
 player.action["meleeAttack"].owner = player;
 player.action["meleeAttack"].damage = 6;
+
+test("should first", () => {
+  second;
+});
