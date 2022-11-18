@@ -3,5 +3,6 @@ class SceneController {
   loadScene(newScene) {
     this.scene = newScene;
     console.log(this.scene);
+    this.scene.action();
   }
 }

@@ -8,4 +8,6 @@ player.party = "players";
 player.action["meleeAttack"] = new BasicAttack();
 player.action["meleeAttack"].owner = player;
 player.action["meleeAttack"].damage = 6;
-
+var sceneController = Config.getSceneController();
+sceneController.scene = Scene1.getInstance();
+sceneController.scene.init();
