@@ -8,11 +8,12 @@ class Scene1 extends Scene {
     var teleport = new Entity();
     teleport.name = "传送门";
     var func = function () {
+      var sceneController = Config.getSceneController();
       alert("move forward");
       sceneController.loadScene(Scene2.getInstance());
       // sceneController.scene = Scene2.getInstance();
     };
-    var forward=Interact.createNew("forward",func)
+    var forward = Interact.createNew("forward", func);
     teleport.interactList = [forward];
     this.entityList = [teleport];
   }
@@ -21,9 +22,9 @@ class Scene1 extends Scene {
    * 期望写法
    * entityLiST=[A,B,C,D]
    * mapping=[{entity:A,interaction:[a,b,c]}]
-   * 
+   *
    * a(){
    * }
-   * 
+   *
    */
 }
