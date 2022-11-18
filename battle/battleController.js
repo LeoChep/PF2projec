@@ -1,0 +1,3 @@
+class BattleController {
+  battle = null;
+}

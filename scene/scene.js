@@ -1,6 +1,7 @@
 class Scene {
   owner = null;
-  creature = {};
+  creature = [];
+  entityList = [];
   message = "";
   static instance = null;
   static getInstance() {

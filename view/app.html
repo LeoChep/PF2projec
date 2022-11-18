@@ -3,12 +3,17 @@
 
 <div id="app">
 <br/>
-   {{getScene}}
+   <p style="white-space: pre-wrap;">{{getScene.message}}</p>
     <div v-for="creature in battle.battleJoiner">
         {{creature.name}}:init{{creature.init}}:hp{{creature.hp}}
         
     </div>
+    <div>
+      <div v-for="creature in getScene.creatureList">
+          <button @click="chooseTarget(creature)">{{creature.name}}</button>
+      </div>
 
+  </div>
 
     <div>
         <div v-for="entity in getScene.entityList">
@@ -17,7 +22,7 @@
         </div>
 
     </div>
-    <div >
+    <div v-if="getBattle!=null">
         <button @click="meleeAttack">meleeAttack</button>
 
     </div>
@@ -26,6 +31,7 @@
 
 <script src="../creature/creature.js"></script>
 <script src="../scene/sceneContoller.js"></script>
+<script src="../battle/battleController.js"></script>
 <script src="../config/config.js"></script>
 <script src="../scene//scene.js"></script>
 <script src="../entity/entity.js"></script>
@@ -35,39 +41,46 @@
 <script src="../action/BasicAttack.js"></script>
 <script src="../action//Interact.js"></script>
 <script src="../tool/d20.js"></script>
-<script src="../startGame.js"></script>
+
 <script src="../av/test/scene1.js"></script>
 <script src="../av/test/scene2.js"></script>
+<script src="../av/test/scene13.js"></script>
+<script src="../startGame.js"></script>
 <script>
    // console.log(creatures);
   const { createApp } = Vue
   const {ref,computed} =Vue
   var battle=new Battle();
-  //battle.startBattle(creatures);
-  //wolf.logic.battle=battle;
-    var sceneController=Config.getSceneController();
-    sceneController.scene=Scene1.getInstance();
-    sceneController.scene.init();
-   // console.log(sceneController);
+
   var app=createApp({
     setup(){
-      const sceneContoller = ref(sceneController)
-      
-      //console.log(sceneContoller)
-      const getScene=computed(()=>sceneContoller.value.scene)
+      const sceneController = ref(Config.getSceneController())
+      Config.setSceneController(sceneController.value)
+   
+      const getScene=computed(()=>sceneController.value.scene)
+
+
+      const battleController = ref(Config.getBattleController())
+      Config.setBattleController(battleController.value)   
+      const getBattle=computed(()=>battleController.value.battle)
+
      // sceneContoller.value.scene={}
-      return{ getScene,sceneContoller}
+      return{ getScene,sceneController,getBattle}
     },
     data() {
       return {
         message: 'battle',
         battle: battle,
+        target:ref({})
         //creaturese:creatures
       }
     },
     methods: {
+        chooseTarget(target){
+          this.target=target
+        },
         meleeAttack(){
-            player.action["meleeAttack"].target=wolf;
+            player.action["meleeAttack"].target=this.target;
             player.action["meleeAttack"].use();
             battle.battleNext();
         },
@@ -76,7 +89,6 @@
         }
     },
   }).mount('#app')
-  console.log(app.sceneContoller.scene)
-  Config.setSceneController(app.sceneContoller)
-  battle.battleNext();
+  console.log(app.sceneController.scene)
+ 
 </script>
