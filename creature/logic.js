@@ -1,4 +1,3 @@
 class Logic {
   work() {}
 }
-

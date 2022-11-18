@@ -1,15 +1,17 @@
 class Battle {
   battleJoiner = [];
   nowInit = 999;
+  log = [];
 
   startBattle(creatures) {
     this.battleJoiner = creatures;
     console.log(this.battleJoiner);
     for (var i = 0; i < this.battleJoiner.length; i++) {
       var creature = this.battleJoiner[i];
-      creature.init = roll() + creature.initBonus;
+      creature.init = creature.rollInit();
     }
     this.battleJoiner.sort(this.sortInit);
+    this.battleNext();
   }
 
   sortInit(b, a) {
@@ -18,7 +20,8 @@ class Battle {
 
   battleNext() {
     var activtor;
-    var biggestInit = 0;
+    var biggestInit = -99;
+
     for (var i = 0; i < this.battleJoiner.length; i++) {
       var creature = this.battleJoiner[i];
       if (creature.init > biggestInit && creature.init < this.nowInit) {
@@ -26,11 +29,14 @@ class Battle {
         biggestInit = creature.init;
       }
     }
-    if (biggestInit != 0) {
+    if (biggestInit != -99) {
       this.nowInit = biggestInit;
-      creature.logic.work();
+      activtor.logic.work();
     } else {
       this.nowInit = 999;
+      biggestInit = -99;
+      this.battleNext();
     }
+    console.log(this.nowInit);
   }
 }

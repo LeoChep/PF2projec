@@ -13,5 +13,13 @@ class Config {
   static setBattleController(battleController) {
     Config.battleController = battleController;
   }
+  static logController = new LogController();
+
+  static getLogController() {
+    return Config.logController;
+  }
+  static setLogController(logController) {
+    Config.logController = logController;
+  }
 }
 var config = new Config();

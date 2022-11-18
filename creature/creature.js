@@ -8,4 +8,8 @@ class Creature {
   party = "friendly";
   logic = new Logic();
   action = {};
+  rollInit() {
+    var ri = roll() + this.initBonus;
+    return ri;
+  }
 }

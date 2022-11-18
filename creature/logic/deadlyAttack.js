@@ -4,7 +4,11 @@ class DeadlyAttack {
   targetPart = null;
   battle = null;
   work() {
-    this.owner.action["attack"].use();
+    try {
+      this.owner.action["attack"].use();
+    } catch {
+      Config.getLogController().log(this.owner.name + "无法攻击！");
+    }
     this.battle.battleNext();
   }
 }

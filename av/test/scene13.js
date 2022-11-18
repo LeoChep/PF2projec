@@ -12,6 +12,9 @@ class Scene13 extends Scene {
   init() {
     var wolf = new Creature();
     wolf.name = "wolf";
+    wolf.logic = new DeadlyAttack();
+    wolf.logic.owner = wolf;
+    wolf.logic.target = player;
     this.creatureList = [wolf];
   }
   action() {
@@ -26,6 +29,7 @@ class Scene13 extends Scene {
     }
     if (wolf != null) {
       var battle = new Battle();
+      wolf.logic.battle = battle;
       Config.battleController.battle = battle;
       battle.battleJoiner = [this.creatureList[0], player];
       battle.startBattle(battle.battleJoiner);
