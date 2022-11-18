@@ -1,7 +1,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 
-<div id="app">{{  }}
+<div id="app">
 <br/>
    {{getScene}}
     <div v-for="creature in battle.battleJoiner">
@@ -45,7 +45,7 @@
   var battle=new Battle();
   //battle.startBattle(creatures);
   //wolf.logic.battle=battle;
-    var sceneController=new SceneController();
+    var sceneController=Config.getSceneController();
     sceneController.scene=Scene1.getInstance();
     sceneController.scene.init();
    // console.log(sceneController);
@@ -62,20 +62,9 @@
       return {
         message: 'battle',
         battle: battle,
-        //creatures:creatures
+        //creaturese:creatures
       }
     },
-     watch: {
-    sceneController: {
-      handler(newValue, oldValue) {
-        // 注意：在嵌套的变更中，
-        // 只要没有替换对象本身，
-        // 那么这里的 `newValue` 和 `oldValue` 相同
-      }}},
-      computed:{
-       
-
-      },
     methods: {
         meleeAttack(){
             player.action["meleeAttack"].target=wolf;
@@ -88,8 +77,6 @@
     },
   }).mount('#app')
   console.log(app.sceneContoller.scene)
-  sceneController=app.sceneContoller
-  //sceneController2.scene={}
- // sceneController2.scene={}
+  Config.setSceneController(app.sceneContoller)
   battle.battleNext();
 </script>
