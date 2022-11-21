@@ -9,6 +9,18 @@ class Battle {
     for (var i = 0; i < this.battleJoiner.length; i++) {
       var creature = this.battleJoiner[i];
       creature.init = creature.rollInit();
+      creature.battle = this;
+      Object.defineProperty(creature, "actionPoint", {
+        get: function () {
+          return this._actionPoint;
+        },
+        set: function (value) {
+          this._actionPoint = value;
+          console.log("sett" + this._actionPoint);
+          if (this._actionPoint <= 0) this.battle.battleNext();
+        },
+      });
+      creature.actionPoint = 3;
     }
     this.battleJoiner.sort(this.sortInit);
     this.battleNext();
@@ -32,6 +44,7 @@ class Battle {
     if (biggestInit != -99) {
       this.nowInit = biggestInit;
       activtor.logic.work();
+      activtor.actionPoint = 3;
     } else {
       this.nowInit = 999;
       biggestInit = -99;

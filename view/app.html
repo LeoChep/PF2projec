@@ -39,6 +39,7 @@
 <script src="../creature//logic/deadlyAttack.js"></script>
 <script src="../battle/battle.js"></script>
 <script src="../creature/logic.js"></script>
+<script src="../action/action.js"></script>
 <script src="../action/BasicAttack.js"></script>
 <script src="../action//Interact.js"></script>
 <script src="../tool/d20.js"></script>
@@ -75,7 +76,7 @@
     data() {
       return {
         message: 'battle',
-        target:ref({})
+        target:ref(null)
         //creaturese:creatures
       }
     },
@@ -87,7 +88,7 @@
             player.action["meleeAttack"].target=this.target;
             player.action["meleeAttack"].use();
             console.log(config)
-            Config.getBattleController().battle.battleNext();
+            //Config.getBattleController().battle.battleNext();
         },
         interact(choice){
             choice.use();
