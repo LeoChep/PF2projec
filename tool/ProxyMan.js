@@ -34,6 +34,7 @@ class ProxyManHandler {
       return this._addWatcherProxy;
     }
     if (type == "function") {
+      console.log("run function")
       var newF = new Proxy(target[prop], {
         apply: (target, thisArg, argumentsList) => {
           console.log("apply");
@@ -47,8 +48,7 @@ class ProxyManHandler {
             argumentsList
           );
           console.log(target);
-          var result = target.apply(target, argumentsList);
-
+          var result = target.apply(thisArg, argumentsList);
           //     console.log("proxy function");
           this._invoke_watchers(
             this.watchers_after[target.name],
