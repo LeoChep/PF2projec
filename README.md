@@ -1,4 +1,4 @@
-# PF2projec
+# PF2project
 
 a ugly demo for pf2's adventrue
 
