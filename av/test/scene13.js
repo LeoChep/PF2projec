@@ -13,16 +13,12 @@ class Scene13 extends Scene {
   init() {
     var teleport = new Entity();
     this.teleport = teleport;
-    teleport.name =
-      "远处墙上有一道裂缝通向黑暗中，而在它上方，石头上刻一个符号，看上去像是个宝箱。当你靠近时，你意识到这道裂缝实际上是一个地下通道的入口——它可能是某些被遗忘宝藏的埋藏处。";
+    teleport.name ="裂缝"
+     
     teleport.hidden = true;
     var func = function () {
       Config.getSceneController().loadScene(Scene2.getInstance());
-      Config.getLogController().log(
-        "你跳到一旁，躲开了狼咆哮着的嘴，将你的剑深深刺入它的侧面。这个可怜的生物嚎叫着，倒在淤泥中，一动不动。你擦干净剑刃，然后走进洞窟中，来确定这是否是唯一一只狼\n" +
-          "当你的眼睛适应黑暗后，你发现自己身处于一个小洞窟中，那显然是野兽的家。这里散发着湿毛皮的气味，遍地还有腐烂的肉渣和骨头——这是之前受害者的证据。不过更有趣的是，你注意到了洞窟的后方。\n" +
-          "远处墙上有一道裂缝通向黑暗中，而在它上方，石头上刻一个符号，看上去像是个宝箱。当你靠近时，你意识到这道裂缝实际上是一个地下通道的入口——它可能是某些被遗忘宝藏的埋藏处。"
-      );
+    
     };
     var forward = Interact.createNew("forward", func);
     teleport.interactList = [forward];
@@ -34,6 +30,7 @@ class Scene13 extends Scene {
     wolf.logic = new DeadlyAttack();
     wolf.logic.owner = wolf;
     wolf.logic.target = player;
+    wolf.initBonus=0;
     wolf.ab = 5;
     var wolfBit = new BasicAttack();
     wolfBit.actionPoint = 1;
@@ -42,6 +39,10 @@ class Scene13 extends Scene {
     wolfBit.target = player;
     wolfBit.owner = wolf;
     wolf = ProxyMan.getProxy(wolf);
+    console.log("rool wolf")
+    wolf.rollInit();
+    console.log(wolf.rollInit())
+    
     this.creatureList = [wolf];
   }
   action() {
@@ -58,7 +59,7 @@ class Scene13 extends Scene {
     if (wolf != null) {
       Config.getLogController().log(this.message);
       alert("战斗开始！");
-      this.message = "狼的AC            14" + "\n" + "狼的生命值         15";
+      this.message = "你现在正在和一匹狼战斗！你知道这野兽无法被驯服，必须杀死才能保证农民家畜的安全。你和狼轮流进行攻击彼此。你攻击掷20面骰（简称为d20），并加上你的攻击加值（attack bonus）（代表你持用武器的技能）。如果总数大于等于狼的盔甲等级（Armor Class）（简称为AC），则攻击命中并造成伤害。从狼的生命值（Hit Points）（简称为HP）。要击倒狼，你必须将狼的HP减至0以下。在狼的回合，它会攻击你——你为狼掷骰d20，加上它的攻击加值，将结果与你的AC比较。如果狼将你的HP减至0以下，你就会死亡。将你的HP和狼的HP都记录在一张草稿纸上。";
       var battle = new Battle();
       wolf.logic.battle = battle;
       Config.battleController.battle = battle;
@@ -66,6 +67,13 @@ class Scene13 extends Scene {
         if (args[0] <= 0) {
           alert("战斗结束");
           battle.battleEnd();
+          this.creatureList=[]
+          Config.getLogController().log(
+            "你跳到一旁，躲开了狼咆哮着的嘴，将你的剑深深刺入它的侧面。这个可怜的生物嚎叫着，倒在淤泥中，一动不动。你擦干净剑刃，然后走进洞窟中，来确定这是否是唯一一只狼\n" +
+              "当你的眼睛适应黑暗后，你发现自己身处于一个小洞窟中，那显然是野兽的家。这里散发着湿毛皮的气味，遍地还有腐烂的肉渣和骨头——这是之前受害者的证据。不过更有趣的是，你注意到了洞窟的后方。\n" +
+              "远处墙上有一道裂缝通向黑暗中，而在它上方，石头上刻一个符号，看上去像是个宝箱。当你靠近时，你意识到这道裂缝实际上是一个地下通道的入口——它可能是某些被遗忘宝藏的埋藏处。"
+          );
+          this.message= "远处墙上有一道裂缝通向黑暗中，而在它上方，石头上刻一个符号，看上去像是个宝箱。当你靠近时，你意识到这道裂缝实际上是一个地下通道的入口——它可能是某些被遗忘宝藏的埋藏处。";
           Config.battleController.battle = null;
           this.teleport.hidden = false;
         }
