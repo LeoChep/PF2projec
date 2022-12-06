@@ -11,30 +11,24 @@ class Battle {
     for (var i = 0; i < this.battleJoiner.length; i++) {
       var creature = this.battleJoiner[i];
       creature.init = creature.rollInit();
+      console.log("roolinit")
       creature.battle = this;
       Object.defineProperty(creature, "actionPoint", {
         get: function () {
           return this._actionPoint;
         },
         set: function (value) {
+
+          console.log("cost action point")
+         console.log(this.battle)
           this._actionPoint=value;
-          if (this._actionPoint <= 0) this.battle.battleNext();
-        },
-      });
-      creature._hp = creature.hp;
-      Object.defineProperty(creature, "hp", {
-        get: function () {
-          return this._hp;
-        },
-        set: function (value) {
-          this._hp = value;
-          console.log("sett" + this._hp);
-          if (this._hp <= 0) {
-           // this.battle = null;
-            Config.getLogController().log(this.name + "死亡");
+          if (this._actionPoint <= 0) {
+          console.log("cost all point")
+            this.battle.battleNext();
           }
         },
       });
+      creature._hp = creature.hp;
       creature.actionPoint = 3;
       console.log("now creature of"+ creature.name+" is "+creature.actionPoint)
     }
