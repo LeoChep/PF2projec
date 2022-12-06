@@ -25,10 +25,13 @@
         <button @click="meleeAttack">meleeAttack</button>
 
     </div>
-    <div class="log" v-for="row in getLogs">
-      {{row}}
+    <div id="logZone" style=" border-width: 5px;border-style:double ;">
+      <div class="log" v-for="row in getLogs">
+        {{row}}
+    </div>
 
-  </div>
+    </div>
+
 </div>
 
 <script src="../creature/creature.js"></script>
