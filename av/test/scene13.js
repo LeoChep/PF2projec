@@ -15,6 +15,14 @@ class Scene13 extends Scene {
     wolf.logic = new DeadlyAttack();
     wolf.logic.owner = wolf;
     wolf.logic.target = player;
+    wolf.ab = 5;
+    var wolfBit = new BasicAttack();
+    wolfBit.actionPoint = 1;
+    wolfBit.damage = 4;
+    wolf.action["attack"] = wolfBit;
+    wolfBit.target = player;
+    wolfBit.owner = wolf;
+    wolf = ProxyMan.getProxy(wolf);
     this.creatureList = [wolf];
   }
   action() {
@@ -25,14 +33,23 @@ class Scene13 extends Scene {
         this.creatureList[i].name === "wolf"
       ) {
         wolf = this.creatureList[i];
+        alert("野生的狼跳了出来！");
       }
     }
     if (wolf != null) {
+      Config.getLogController().log(this.message);
+      alert("战斗开始！");
+      this.message = "狼的AC            14" + "\n" + "狼的生命值         15";
       var battle = new Battle();
       wolf.logic.battle = battle;
       Config.battleController.battle = battle;
-      battle.battleJoiner = [this.creatureList[0], player];
+      new Watcher("hp", (obj, watch, args) => {
+        if (args[0] <= 0) alert("战斗结束");
+        battle.battleEnd();
+      }).watch("after", wolf);
+      battle.battleJoiner = [wolf, player];
       battle.startBattle(battle.battleJoiner);
+      //console.log(this.creatureList);
     }
   }
   /**

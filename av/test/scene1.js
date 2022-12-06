@@ -14,8 +14,12 @@ class Scene1 extends Scene {
     var teleport = new Entity();
     teleport.name =
       "你收拾好行李，沿着满布礁石的海岸出发，开始你的狩猎。没过多久，你就找到了一个黑暗神秘的洞窟入口。巨大的爪印通向黑暗中。";
+
     var func = function () {
       Config.getSceneController().loadScene(Scene13.getInstance());
+      Config.getLogController().log(
+        "你收拾好行李，沿着满布礁石的海岸出发，开始你的狩猎。没过多久，你就找到了一个黑暗神秘的洞窟入口。巨大的爪印通向黑暗中。"
+      );
     };
     var forward = Interact.createNew("forward", func);
     teleport.interactList = [forward];

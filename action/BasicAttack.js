@@ -12,6 +12,9 @@ class BasicAttack extends Action {
     }
     if (this.owner.ab + roll() >= this.target.ac) {
       this.log(this.owner.name + "hit!" + this.damage);
+      this.target.hp -= this.damage;
+    } else {
+      this.log(this.owner.name + "miss!");
     }
     super.actionPointCost();
   }

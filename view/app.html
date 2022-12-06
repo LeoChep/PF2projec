@@ -43,7 +43,7 @@
 <script src="../action/BasicAttack.js"></script>
 <script src="../action//Interact.js"></script>
 <script src="../tool/d20.js"></script>
-
+<script src="../tool/ProxyMan.js"></script>
 <script src="../av/test/scene1.js"></script>
 <script src="../av/test/scene2.js"></script>
 <script src="../av/test/scene13.js"></script>
@@ -69,7 +69,6 @@
       const logController = ref(Config.getLogController())
       Config.setLogController(logController.value)   
       const getLogs=computed(()=>logController.value.logs)
-
      // sceneContoller.value.scene={}
       return{ getScene,sceneController,getBattle,logController,getLogs}
     },

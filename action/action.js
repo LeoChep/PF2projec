@@ -8,5 +8,6 @@ class Action {
   }
   actionPointCost() {
     this.owner.actionPoint = this.owner.actionPoint - this.actionPoint;
+    console.log(this.owner.actionPoint);
   }
 }
